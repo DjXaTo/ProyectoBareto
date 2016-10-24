@@ -39,10 +39,8 @@ public class Conexion {
             URLSQL = br.readLine();
             bdSQL = br.readLine();
             
-            usuarioLITE = br.readLine();
-            passLITE = br.readLine();
             URLLITE = br.readLine();
-            bdLITE= br.readLine();
+            
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al coger los datos de conexion");
@@ -64,7 +62,7 @@ public class Conexion {
         RecogeDatos();
         conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite://" + URLLITE + "/" + bdLITE, usuarioLITE, passLITE);
+            conn = DriverManager.getConnection("jdbc:sqlite://" + URLLITE);
             if(conn!=null) {
                 System.out.print("Conectado");
             }
