@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
+import sun.util.logging.PlatformLogger;
 
 public class Conexion {
 
@@ -36,7 +38,7 @@ public class Conexion {
         }
     }
 
-    public Connection conectado() {
+    public Connection conexionSQL() {
         RecogeDatos();
         conn = null;
         try {
@@ -47,15 +49,18 @@ public class Conexion {
         return conn;
     }
     
-//    public Connection getConexion() {
-//        try{
-//                Class.forName("com.mysql.jdbc.Driver");
-//                this.conn = DriverManager.getConnection(this.URL + "/" + this.bd, this.usuario , this.pass);    
-//            
-//        }catch(SQLException | ClassNotFoundException e){
-//            e.printStackTrace();
-//        }
-//        return this.conn;
-//    }
- 
+    public Connection conexionLITE(){
+        RecogeDatos();
+        conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:"+URL);
+            if(conn!=null) {
+                System.out.print("Conectado");
+            }
+        } catch (SQLException e) {
+            System.err.println("No se ha podido conectar a la base de datos" + e.getMessage());
+        }
+        return conn;
+    }
+    
 }
