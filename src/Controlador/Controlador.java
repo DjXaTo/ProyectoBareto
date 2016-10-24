@@ -12,4 +12,7 @@ public class Controlador {
     public void iniciar(){
         
     }
+    enum btn{
+        
+    }
 }
