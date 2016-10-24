@@ -13,10 +13,16 @@ import sun.util.logging.PlatformLogger;
 
 public class Conexion {
 
-    String usuario;
-    String pass;
-    String URL;
-    String bd;
+    String usuarioSQL;
+    String passSQL;
+    String URLSQL;
+    String bdSQL;
+    
+    String usuarioLITE;
+    String passLITE;
+    String URLLITE;
+    String bdLITE;
+    
     Connection conn = null;
 
     public Conexion() {
@@ -28,10 +34,15 @@ public class Conexion {
             FileReader fr = new FileReader(fe);
             BufferedReader br = new BufferedReader(fr);
 
-            usuario = br.readLine();
-            pass = br.readLine();
-            URL = br.readLine();
-            bd = br.readLine();
+            usuarioSQL = br.readLine();
+            passSQL = br.readLine();
+            URLSQL = br.readLine();
+            bdSQL = br.readLine();
+            
+            usuarioLITE = br.readLine();
+            passLITE = br.readLine();
+            URLLITE = br.readLine();
+            bdLITE= br.readLine();
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al coger los datos de conexion");
@@ -42,7 +53,7 @@ public class Conexion {
         RecogeDatos();
         conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://" + URL + "/" + bd, usuario, pass);
+            conn = DriverManager.getConnection("jdbc:mysql://" + URLSQL + "/" + bdSQL, usuarioSQL, passSQL);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -53,7 +64,7 @@ public class Conexion {
         RecogeDatos();
         conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:"+URL);
+            conn = DriverManager.getConnection("jdbc:sqlite://" + URLLITE + "/" + bdLITE, usuarioLITE, passLITE);
             if(conn!=null) {
                 System.out.print("Conectado");
             }
