@@ -4,10 +4,10 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 public class Modelo extends Conexion {
@@ -15,7 +15,7 @@ public class Modelo extends Conexion {
     public Modelo() {
     }
 
-    public boolean hacerPedido(ArrayList nombres, ArrayList cant, String bar, String prov) {
+    public boolean hacerPedido(ArrayList nombres, ArrayList cant, String bar, String prov, boolean sql) {
         try {
             String a = "{call insertarPedido(?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(a);
@@ -36,7 +36,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean insertarProducto(String pro, String pre, String nom) {
+    public boolean insertarProducto(String pro, String pre, String nom, boolean sql) {
         try {
             String q = "{call  insertarProducto(? , ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -51,7 +51,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean actualizarProducto(String pro, String nom, String idpro, String pre) {
+    public boolean actualizarProducto(String pro, String nom, String idpro, String pre, boolean sql) {
         try {
             String q = "{call  actualizarProducto(?, ?, ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -67,7 +67,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean borrarProducto(String idpro) {
+    public boolean borrarProducto(String idpro, boolean sql) {
         try {
             String q = "{call  borrarProducto(?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -80,7 +80,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean insertaBar(String nom, String dom, String hor, String dias, String lic) {
+    public boolean insertaBar(String nom, String dom, String hor, String dias, String lic, boolean sql) {
         try {
             String q = "{call  insertaBar(?, ?, ? , ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -97,7 +97,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean borrarBar(String ide) {
+    public boolean borrarBar(String ide, boolean sql) {
         try {
             String q = "{call  borrarBar(?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -110,7 +110,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean crearEmple(String dn, String nom, String dom) {
+    public boolean crearEmple(String dn, String nom, String dom, boolean sql) {
         try {
             String q = "{call  crearEmple(?, ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -124,8 +124,23 @@ public class Modelo extends Conexion {
         }
         return false;
     }
-
-    public boolean borrarEmple(String dn) {
+    
+    public boolean actualizarEmple(String dn, String nom, String dom, boolean sql) {
+        try {
+            String q = "{call  actualizarEmple(?, ?, ?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setString(1, dn);
+            cstmt.setString(2, nom);
+            cstmt.setString(3, dom);
+            cstmt.execute();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean borrarEmple(String dn, boolean sql) {
         try {
             String q = "{call  borrarEmple(?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -138,7 +153,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean asignarEmpleBar(String ide, String dn, String ro) {
+    public boolean asignarEmpleBar(String ide, String dn, String ro, boolean sql) {
         try {
             String q = "{call asignarEmpleBar(?, ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -153,7 +168,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean borrarEmpleBar(String dn, String ide) {
+    public boolean borrarEmpleBar(String dn, String ide, boolean sql) {
         try {
             String q = "{call borrarEmpleBar(?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -167,7 +182,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean actualizarEmpleBar(String ide, String dn, String ro) {
+    public boolean actualizarEmpleBar(String ide, String dn, String ro, boolean sql) {
         try {
             String q = "{call actualizarEmpleBar(?, ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -182,7 +197,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean gastar(String cant, String cod, String bar) {
+    public boolean gastar(String cant, String cod, String bar, boolean sql) {
         try {
             String q = "{?=call gastar(?, ?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -198,7 +213,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean borrarInventario(String cod, String bar) {
+    public boolean borrarInventario(String cod, String bar, boolean sql) {
         try {
             String q = "{call borrarInventario(?, ?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
@@ -212,7 +227,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public DefaultComboBoxModel getBares() {
+    public DefaultComboBoxModel getBares(boolean sql) {
         DefaultComboBoxModel com = new DefaultComboBoxModel();
         try {
             String q = "{call getBares()}";
@@ -228,8 +243,12 @@ public class Modelo extends Conexion {
         return com;
     }
 
-    public DefaultTableModel getEmpleado() {
-        DefaultTableModel tab = new DefaultTableModel();
+    public DefaultTableModel getEmpleado(boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel(){
+            public boolean isCellEditable(int row, int column) {
+               return false;    
+            }
+        };
         try {
             String p = "{?=call getCountEmpleado()}";
             String q = "{call getEmpleado()}";
@@ -252,10 +271,98 @@ public class Modelo extends Conexion {
                 }
                 k++;
             }
-             tab.setDataVector(data, column);
+            tab.setDataVector(data, column);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return tab;
     }
+
+    public DefaultTableModel getProductos(boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        try {
+            String p = "{?=call getCountProductos()}";
+            String q = "{call getProductos()}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(p);
+            cstmt.registerOutParameter(1, Type.INT);
+            cstmt.execute();
+            int j = cstmt.getInt(1);
+            cstmt = this.conexionSQL().prepareCall(q);
+            ResultSet rs = cstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[j][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                column[i] = rsmd.getColumnName(i + 1);
+            }
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            tab.setDataVector(data, column);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return tab;
+    }
+    
+    public DefaultTableModel getBar(boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return column != 0;
+            }
+        };
+        try {
+            String p = "{?=call getCountBar()}";
+            String q = "{call getBar()}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(p);
+            cstmt.registerOutParameter(1, Type.INT);
+            cstmt.execute();
+            int j = cstmt.getInt(1);
+            cstmt = this.conexionSQL().prepareCall(q);
+            ResultSet rs = cstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[j][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                column[i] = rsmd.getColumnName(i + 1);
+            }
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            tab.setDataVector(data, column);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return tab;
+    }
+    
+    public DefaultListModel getEmpleadoList(String nom, String dn, boolean sql){
+        DefaultListModel list = new DefaultListModel();
+        try{
+             String q = "{call getEmpleadoList(String nom, String dn)}";
+             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+             cstmt.setString(1, nom);
+             cstmt.setString(2, dn);
+             ResultSet rs=cstmt.executeQuery();
+             while(rs.next()){
+                 list.addElement(rs.getString(1)+"-"+rs.getString(2));
+             }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+       
 }
