@@ -44,8 +44,6 @@ public class Interfaz extends javax.swing.JFrame {
         txtNombreBarNuevo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtBarDomicilioNuevo = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        txtFechaApertura = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         txtDias = new com.toedter.components.JSpinField();
@@ -244,8 +242,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel14.setText("Domicilio:");
 
-        jLabel15.setText("Fecha de Apertura:");
-
         jLabel16.setText("Horario:");
 
         jLabel17.setText("Dias:");
@@ -315,7 +311,7 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnIzquierdaTitular)
                             .addComponent(btnDerechaTitular))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel19)
@@ -357,13 +353,11 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15))
-                        .addGap(27, 27, 27)
+                            .addComponent(jLabel14))
+                        .addGap(77, 77, 77)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreBarNuevo)
-                            .addComponent(txtBarDomicilioNuevo)
-                            .addComponent(txtFechaApertura, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+                            .addComponent(txtNombreBarNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(txtBarDomicilioNuevo)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
@@ -407,10 +401,6 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(jLabel14)
                             .addComponent(txtBarDomicilioNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(txtFechaApertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
                             .addComponent(minuto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1201,7 +1191,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1279,7 +1268,6 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JTextField txtDni;
     public javax.swing.JTextField txtDomicilioEmple;
     public javax.swing.JTextField txtDomicilioEmpleado;
-    public com.toedter.calendar.JDateChooser txtFechaApertura;
     public javax.swing.JLabel txtIdBar;
     public javax.swing.JFormattedTextField txtLicencia;
     public javax.swing.JLabel txtNombreBar;

@@ -261,12 +261,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -296,12 +296,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -331,12 +331,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -401,12 +401,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -446,12 +446,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -483,12 +483,12 @@ public class Modelo extends Conexion {
             ResultSetMetaData rsmd = rs.getMetaData();
             String column[] = new String[rsmd.getColumnCount()];
             String data[][] = new String[j][rsmd.getColumnCount()];
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                 column[i] = rsmd.getColumnName(i + 1);
             }
             int k = 0;
             while (rs.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
                     data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                 }
                 k++;
@@ -508,7 +508,7 @@ public class Modelo extends Conexion {
             cstmt.setString(1, ide);
             ResultSet rs = cstmt.executeQuery();
             while (rs.next()) {
-                list.addElement(rs.getString(1) + "-" + rs.getString(2) + "-" + rs.getString(3));
+                list.addElement(rs.getString(1) + "-" + rs.getString(2) + "-" + rs.getString(3)+"-"+rs.getString(4));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

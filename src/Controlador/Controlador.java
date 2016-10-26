@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -173,7 +175,55 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
                vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
                vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
-               vis.tablaPedidos.setModel(mod.getPedidos(ide, sql));
+               vis.tablaPedidos.setModel(mod.getPedidos("0", sql));
+               break;
+           case cancelselectbar:
+               if(vis.txtNombreBar.getText().isEmpty()){
+                   System.exit(0);
+               }else{
+                   vis.dialogSelecBar.dispose();
+               }
+               break;
+                //dialogAdministrarBares
+           case añadirbar:
+               if(mod.vacio(vis.txtLicencia.getText(), vis.txtBarDomicilioNuevo.getText(), vis.txtNombreBarNuevo.getText(), "u","u") && vis.txtLicencia.isEditValid()){
+                   try{
+                   String hora=String.valueOf(vis.hora1.getValue())+":"+String.valueOf(vis.minuto1.getValue())+"-"+String.valueOf(vis.hora2.getValue())+":"+String.valueOf(vis.minuto2.getValue());
+                   if(mod.insertaBar(vis.txtNombreBarNuevo.getText(), vis.txtBarDomicilioNuevo.getText(), hora, String.valueOf(vis.txtDias.getValue()), String.valueOf(vis.txtLicencia.getText()), sql)){
+                       vis.tablaBar.setModel(mod.getBar(sql));
+                       vis.txtLicencia.setText(""); 
+                       vis.txtBarDomicilioNuevo.setText("");
+                       vis.txtNombreBarNuevo.setText("");
+                   }else{
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error o los campos son muy largos");   
+                   }
+                   }catch(Exception n){
+                       JOptionPane.showMessageDialog(null, "hora y dias sin letras por favor");
+                   }
+               }
+               break;
+           case borrarbar:
+               if(vis.tablaBar.getSelectedRow()>-1){
+               if(mod.borrarBar(String.valueOf(vis.tablaBar.getValueAt(vis.tablaBar.getSelectedRow(), 0)), sql)){
+                    vis.tablaBar.setModel(mod.getBar(sql));
+               }else{
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error");   
+               }
+                   }
+               break;
+           case izquierdatitular:
+               if(vis.listEmpleadosParaBar.getSelectedIndex()>-1){
+                   DefaultListModel l=Lista.extraerDefaultList(vis.listNuevoTitular);
+                   l.addElement(vis.listEmpleadosParaBar.getSelectedValue());
+                   vis.listNuevoTitular.setModel(l);
+               }
+               break;
+           case derechatitular:
+               if(vis.listNuevoTitular.getSelectedIndex()>-1){
+                   DefaultListModel l=Lista.extraerDefaultList(vis.listNuevoTitular);
+                   l.removeElement(vis.listNuevoTitular.getSelectedValue());
+                   vis.listNuevoTitular.setModel(l);
+               }
                break;
        }
     }
