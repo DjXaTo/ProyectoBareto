@@ -93,6 +93,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         vis.btnDerechaTitular.addActionListener(this);
         vis.btnNuevoEmpleadoBar.setActionCommand("nuevoempleadobar");
         vis.btnNuevoEmpleadoBar.addActionListener(this);
+        vis.txtBusqueda.addPropertyChangeListener(this);
         //dialogEmpleados
         vis.btnAñadirEmpleado.setActionCommand("añadirempleado");
         vis.btnAñadirEmpleado.addActionListener(this);
@@ -224,6 +225,10 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                    l.removeElement(vis.listNuevoTitular.getSelectedValue());
                    vis.listNuevoTitular.setModel(l);
                }
+               break;
+           case  nuevoempleadobar:
+               vis.dialogAñadirEmpleado.setSize(250, 250);
+               vis.dialogAñadirEmpleado.setVisible(true);
                break;
        }
     }
