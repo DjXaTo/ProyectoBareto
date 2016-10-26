@@ -184,7 +184,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         vis.listPedidoFecha.addMouseListener(this);
         vis.comboContratar.setModel(mod.rol());
         vis.comboPuestoEmple.setModel(mod.rol());
-        vis.dialogSelecBar.setSize(200, 200);
+        vis.dialogSelecBar.setSize(370, 240);
         vis.dialogSelecBar.setVisible(true);
     }
 

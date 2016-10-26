@@ -160,6 +160,10 @@ public class Interfaz extends javax.swing.JFrame {
         menuSalir = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
 
+        dialogSelecBar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogSelecBar.setModal(true);
+        dialogSelecBar.setResizable(false);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione una zona"));
 
         grupoZonaBares.add(rbNorte);

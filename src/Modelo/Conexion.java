@@ -62,9 +62,9 @@ public class Conexion {
         RecogeDatos();
         conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite://" + URLLITE);
+            conn = DriverManager.getConnection("jdbc:sqlite:" + URLLITE);
             if(conn!=null) {
-                System.out.print("Conectado");
+               // System.out.print("Conectado");
             }
         } catch (SQLException e) {
             System.err.println("No se ha podido conectar a la base de datos" + e.getMessage());
