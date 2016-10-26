@@ -15,6 +15,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -77,6 +80,21 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
     }
 
     public void iniciar() {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(vis);
+            SwingUtilities.updateComponentTreeUI(vis.dialogAdministrarBares);
+            SwingUtilities.updateComponentTreeUI(vis.dialogAñadirEmpleado);
+            SwingUtilities.updateComponentTreeUI(vis.dialogContratar);
+            SwingUtilities.updateComponentTreeUI(vis.dialogEmpleados);
+            SwingUtilities.updateComponentTreeUI(vis.dialogHacerPedido);
+            SwingUtilities.updateComponentTreeUI(vis.dialogProductos);
+            SwingUtilities.updateComponentTreeUI(vis.dialogSelecBar);
+        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException ex) {
+        } catch (InstantiationException ex) {
+        } catch (IllegalAccessException ex) {
+        }
         //dialogSelecbar
         vis.btnSelectBar.setActionCommand("selectbar");
         vis.btnSelectBar.addActionListener(this);
@@ -160,8 +178,14 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         vis.btnBorrarInventario.addActionListener(this);
         vis.btnHacerPedido.setActionCommand("hacerpedido");
         vis.btnHacerPedido.addActionListener(this);
+        vis.tablaInventario.addKeyListener(this);
         //jframe pedidos
+        vis.rbNorte.setSelected(true);
         vis.listPedidoFecha.addMouseListener(this);
+        vis.comboContratar.setModel(mod.rol());
+        vis.comboPuestoEmple.setModel(mod.rol());
+        vis.dialogSelecBar.setSize(200, 200);
+        vis.dialogSelecBar.setVisible(true);
     }
 
     @Override
@@ -177,6 +201,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                 vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
                 vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
                 vis.tablaPedidos.setModel(mod.getPedidos("0", sql));
+                vis.setVisible(true);
                 break;
             case cancelselectbar:
                 if (vis.txtNombreBar.getText().isEmpty()) {
@@ -472,6 +497,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
             case hacerpedido:
                 vis.dialogHacerPedido.setSize(750, 320);
                 vis.dialogHacerPedido.setVisible(true);
+                vis.comboProveedores.setModel(mod.getProveedores(sql));
                 break;
         }
     }
@@ -546,6 +572,15 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
             }
             }else{
                   JOptionPane.showMessageDialog(null, "No puede estar vacio");  
+                }
+            } else{
+                int a=vis.tablaInventario.getSelectedRow();
+                if (mod.vacio((String) vis.tablaInventario.getValueAt(a, 0), "u", "o", "o")) {
+                if (mod.actualizarPrecioInventario((String) vis.tablaInventario.getValueAt(a, 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(a, 4), sql)) {
+                    vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                }
+            }else{
+                    JOptionPane.showMessageDialog(null, "No puede estar vacio");   
                 }
             }
         }
