@@ -7,15 +7,19 @@ package Modelo;
 
 import com.mysql.jdbc.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author alfre
  */
-public class Modelo_Alfredo {
+public class Modelo_Alfredo extends Conexion{
     
     private Connection cx;
     private Statement st;
@@ -23,8 +27,7 @@ public class Modelo_Alfredo {
     public boolean hacerPedido(){
         boolean exito=false;
 
-            try{    //creamos la sentencia sql para insertar un contacto
-                
+            try{    //creamos la sentencia sql para insertar un contacto 
                 String sql="insert into inventario_pedidos (inventario_codigo, inventario_bar_idbar, cantidad, pedidos_id)"
                         + " VALUES ((select idproductos from productos where nombre=nom), bar, cant, (select max(id) from pedidos))";
                 st=(Statement) cx.createStatement();    //creo la instancia de Statement
@@ -72,8 +75,7 @@ public class Modelo_Alfredo {
     public boolean actualizarPedido(){
         boolean exito=false;
 
-            try{    //creamos la sentencia sql para insertar un contacto
-                
+            try{    //creamos la sentencia sql para insertar un contacto 
                 String sql="update pedidos set precio=precio+cant*(select precio from productos where idproductos=ide) where id=ped";
                 st=(Statement) cx.createStatement();    //creo la instancia de Statement
                 st.executeUpdate(sql);      //uso el metodo ExecuteUpdate pasandoles la sentencia sql
@@ -879,6 +881,69 @@ public class Modelo_Alfredo {
         
         return exito;
     }
-      
+      //ejemplo de ejecutar un insert delete o update
+      public boolean borrarProfesor(String dni){
+         try{
+            String q="delete from profesores where dni='"+dni+"'";
+            PreparedStatement ps=this.conexionLITE().prepareStatement(q);
+            ps.execute();
+            ps.close();
+            return true;
+        }catch(SQLException e){
+           
+        }
+        return false;
+    }
+      //ejemplo de tabla
+       public DefaultTableModel getAlumnos() {
+        DefaultTableModel md = new DefaultTableModel();
+        int a = 0;
+        String[] columna = {"Nombre", "numero de alumno", "clase"};
+        try {
+            String q = "select count(*) as todo from alumno";
+            PreparedStatement ps = this.conexionLITE().prepareStatement(q);
+            ResultSet res = ps.executeQuery();
+            res.next();
+            a = res.getInt("todo");
+            res.close();
+        } catch (Exception e) {
+            System.err.print(e.getMessage());
+        }
+        String[][] data = new String[a][3];
+        try {
+            String q = "select * from alumno order by nombre, numaula";
+            PreparedStatement ps = this.conexionLITE().prepareStatement(q);
+            ResultSet res = ps.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                data[i][0] = res.getString("nombre");
+                data[i][1] = res.getString("numalumno");
+                data[i][2] = res.getString("numaula");
+                i++;
+            }
+            md.setDataVector(data, columna);
+            res.close();
+        } catch (Exception e) {
+            System.err.print(e.getMessage());
+        }
+        return md;
+    }
+       //ejemplo de lista 
+       public DefaultListModel getListaProfesores() {
+        DefaultListModel list = new DefaultListModel();//para combobox es lo mismo
+        try {
+            String q = "select nombre,dni from profesores";
+            PreparedStatement ps = this.conexionLITE().prepareStatement(q);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                list.addElement(res.getString("nombre")+"-"+res.getString("dni"));
+            }
+            res.close();
+        } catch (Exception e) {
+            System.err.print(e.getMessage());
+        }
+
+        return list;
+    }
      
 }

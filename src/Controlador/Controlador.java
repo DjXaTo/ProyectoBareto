@@ -230,6 +230,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                vis.dialogAñadirEmpleado.setSize(250, 250);
                vis.dialogAñadirEmpleado.setVisible(true);
                break;
+               //
        }
     }
 
