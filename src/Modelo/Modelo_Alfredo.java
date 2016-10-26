@@ -44,25 +44,7 @@ public class Modelo_Alfredo extends Conexion{
     }
     
     
-    public boolean insertaInventario(int codigo, String nombre, int cantidad, int bar_idbar){
-        boolean exito=false;
-
-            try{    //creamos la sentencia sql para insertar un contacto
-                
-                String sql="insert into inventario (codigo, nombre, cantidad, bar_idbar)"
-                        + " VALUES (new.inventario_codigo, (select nombre from productos "
-                        + "where idproductos=new.inventario_codigo), new.cantidad, new.inventario_bar_idbar)";
-                PreparedStatement ps=this.conexionLITE().prepareStatement(sql);
-                ps.execute();
-                ps.close();
-                exito=true;     //si no salta ninguna excepcion se ha insertado el contacto
-             }catch(SQLException ex){
-                 System.err.println(ex.getMessage());
-             }
-        
-        return exito;
-    }
-    
+   
     
     public boolean actualizarPedido(int ped){
         boolean exito=false;
@@ -422,7 +404,7 @@ public class Modelo_Alfredo extends Conexion{
 
             try{    //creamos la sentencia sql para insertar un contacto
                 
-                String sql="select (idproductos,nombre,precio, proveedor) as todo from productos";
+                String sql="select count(*) as todo from productos";
                 PreparedStatement ps=this.conexionLITE().prepareStatement(sql);
                 ResultSet res = ps.executeQuery();
                 res.next();
@@ -431,7 +413,7 @@ public class Modelo_Alfredo extends Conexion{
              }catch(SQLException ex){
                  System.err.println(ex.getMessage());
              }
-            String q = "select * from productos";
+            String q = "select idproductos, nombre, precio, proveedor from productos";
         try{
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet rs = ps.executeQuery();

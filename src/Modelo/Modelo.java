@@ -246,7 +246,9 @@ public class Modelo extends Conexion {
     public DefaultTableModel getEmpleado(boolean sql) {
         DefaultTableModel tab = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
+                if(column ==0)
                 return false;
+                return true;
             }
         };
         try {
@@ -549,7 +551,7 @@ public class Modelo extends Conexion {
         return false;
     }
 
-    public boolean vacio(String a, String b, String c, String d, String e) {
-        return !(a.isEmpty() || b.isEmpty() || c.isEmpty() || d.isEmpty() || e.isEmpty());
+    public boolean vacio(String a, String b, String c, String d) {
+        return !(a.isEmpty() || b.isEmpty() || c.isEmpty() || d.isEmpty());
     }
 }

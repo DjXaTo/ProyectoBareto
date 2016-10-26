@@ -93,8 +93,6 @@ public class Interfaz extends javax.swing.JFrame {
         btnBorrarProducto = new javax.swing.JButton();
         btnActualizarProducto = new javax.swing.JButton();
         dialogHacerPedido = new javax.swing.JDialog();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         comboProveedores = new javax.swing.JComboBox<>();
         jLabel27 = new javax.swing.JLabel();
         txtCantidadPedido = new com.toedter.components.JSpinField();
@@ -105,6 +103,8 @@ public class Interfaz extends javax.swing.JFrame {
         btnQuitarProductoPedido = new javax.swing.JButton();
         btnAceptarPedido = new javax.swing.JButton();
         btnCancelarPedido = new javax.swing.JButton();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        listProductoAPedir = new javax.swing.JList<>();
         dialogContratar = new javax.swing.JDialog();
         jScrollPane12 = new javax.swing.JScrollPane();
         listContratar = new javax.swing.JList<>();
@@ -222,6 +222,8 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(btnCancelSelectBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        dialogAdministrarBares.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tablaBar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -446,6 +448,8 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
+        dialogEmpleados.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -485,6 +489,8 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(btnAñadirEmpleado))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
+
+        dialogAñadirEmpleado.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel21.setText("Nombre:");
 
@@ -540,6 +546,8 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(btnCancelarNuevoEmpleado))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
+
+        dialogProductos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -616,19 +624,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(0, 21, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Nombre", "Cantidad"
-            }
-        ));
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane10.setViewportView(jTable2);
+        dialogHacerPedido.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         comboProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -651,62 +647,72 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnCancelarPedido.setText("Cancelar");
 
+        jScrollPane13.setViewportView(listProductoAPedir);
+
         javax.swing.GroupLayout dialogHacerPedidoLayout = new javax.swing.GroupLayout(dialogHacerPedido.getContentPane());
         dialogHacerPedido.getContentPane().setLayout(dialogHacerPedidoLayout);
         dialogHacerPedidoLayout.setHorizontalGroup(
             dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jLabel27)
-                .addGap(18, 18, 18)
-                .addComponent(txtCantidadPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
-                .addComponent(jLabel28)
-                .addGap(18, 18, 18)
-                .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
-                .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAceptarPedido)
-                        .addGap(54, 54, 54)
-                        .addComponent(btnCancelarPedido))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogHacerPedidoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAñadirProductoPedido)
-                            .addComponent(btnQuitarProductoPedido))
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 73, Short.MAX_VALUE))
+                        .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
+                                .addComponent(btnAceptarPedido)
+                                .addGap(54, 54, 54)
+                                .addComponent(btnCancelarPedido))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogHacerPedidoLayout.createSequentialGroup()
+                                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAñadirProductoPedido)
+                                    .addComponent(btnQuitarProductoPedido))
+                                .addGap(37, 37, 37)
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 73, Short.MAX_VALUE))
+                    .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
+                        .addComponent(jLabel27)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCantidadPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel28)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         dialogHacerPedidoLayout.setVerticalGroup(
             dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
                 .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(btnAñadirProductoPedido)
-                        .addGap(66, 66, 66)
-                        .addComponent(btnQuitarProductoPedido)))
-                .addGap(18, 18, 18)
-                .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel27)
-                        .addComponent(jLabel28))
-                    .addComponent(txtCantidadPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(btnAñadirProductoPedido)
+                                .addGap(66, 66, 66)
+                                .addComponent(btnQuitarProductoPedido))
+                            .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel27)
+                                .addComponent(jLabel28))
+                            .addComponent(txtCantidadPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(dialogHacerPedidoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(dialogHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptarPedido)
                     .addComponent(btnCancelarPedido))
                 .addContainerGap())
         );
+
+        dialogContratar.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         listContratar.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -1219,9 +1225,9 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1231,11 +1237,11 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTable jTable2;
     public javax.swing.JList<String> listContratar;
     public javax.swing.JList<String> listEmpleadosParaBar;
     public javax.swing.JList<String> listNuevoTitular;
     public javax.swing.JList<String> listPedidoFecha;
+    public javax.swing.JList<String> listProductoAPedir;
     public javax.swing.JList<String> listProductoPedido;
     private javax.swing.JMenu menuBar;
     private javax.swing.JMenu menuPersonas;
