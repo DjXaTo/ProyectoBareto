@@ -107,6 +107,12 @@ public class Interfaz extends javax.swing.JFrame {
         btnQuitarProductoPedido = new javax.swing.JButton();
         btnAceptarPedido = new javax.swing.JButton();
         btnCancelarPedido = new javax.swing.JButton();
+        dialogContratar = new javax.swing.JDialog();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        listContratar = new javax.swing.JList<>();
+        comboContratar = new javax.swing.JComboBox<>();
+        btnAceptarContratar = new javax.swing.JButton();
+        btnCancelarContratar = new javax.swing.JButton();
         panelDatos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreBar = new javax.swing.JLabel();
@@ -114,7 +120,6 @@ public class Interfaz extends javax.swing.JFrame {
         txtDirecBar = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtAdminBar = new javax.swing.JLabel();
-        btnCalculadora = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelEmpleados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -153,6 +158,7 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaPedidos = new javax.swing.JTable();
         btnHacerPedido = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuBar = new javax.swing.JMenu();
         miSelectBar = new javax.swing.JMenuItem();
@@ -720,6 +726,48 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        listContratar.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane12.setViewportView(listContratar);
+
+        comboContratar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnAceptarContratar.setText("Aceptar");
+
+        btnCancelarContratar.setText("Cancelar");
+
+        javax.swing.GroupLayout dialogContratarLayout = new javax.swing.GroupLayout(dialogContratar.getContentPane());
+        dialogContratar.getContentPane().setLayout(dialogContratarLayout);
+        dialogContratarLayout.setHorizontalGroup(
+            dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogContratarLayout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(dialogContratarLayout.createSequentialGroup()
+                        .addComponent(btnAceptarContratar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addComponent(btnCancelarContratar))
+                    .addComponent(jScrollPane12)
+                    .addComponent(comboContratar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+        dialogContratarLayout.setVerticalGroup(
+            dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogContratarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(comboContratar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptarContratar)
+                    .addComponent(btnCancelarContratar))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del bar seleccionado"));
@@ -731,7 +779,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel6.setText("Direccion del bar:");
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Administrador del bar:");
+        jLabel7.setText("Numero del bar:");
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -741,8 +789,8 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -767,9 +815,6 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(txtAdminBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnCalculadora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnCalculadora.setText("Boton pa la calculadora");
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Administración del bar"));
 
@@ -1029,28 +1074,36 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnHacerPedido.setText("Hacer Pedido");
 
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("PEDIDOS");
+
         javax.swing.GroupLayout panelPedidosLayout = new javax.swing.GroupLayout(panelPedidos);
         panelPedidos.setLayout(panelPedidosLayout);
         panelPedidosLayout.setHorizontalGroup(
             panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
+                .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(panelPedidosLayout.createSequentialGroup()
                 .addGap(396, 396, 396)
                 .addComponent(btnHacerPedido)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(417, Short.MAX_VALUE))
         );
         panelPedidosLayout.setVerticalGroup(
             panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelPedidosLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(87, 87, 87)
                 .addComponent(btnHacerPedido)
                 .addContainerGap(105, Short.MAX_VALUE))
@@ -1102,19 +1155,14 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalculadora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCalculadora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -1159,6 +1207,7 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAceptarContratar;
     private javax.swing.JButton btnAceptarNuevoEmpleado;
     public javax.swing.JButton btnAceptarPedido;
     public javax.swing.JButton btnActualizarProducto;
@@ -1169,9 +1218,9 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnBorrarBar;
     public javax.swing.JButton btnBorrarEmpleado;
     public javax.swing.JButton btnBorrarProducto;
-    public javax.swing.JLabel btnCalculadora;
     public javax.swing.JButton btnCambiarPuestoEmple;
     public javax.swing.JButton btnCancelSelectBar;
+    public javax.swing.JButton btnCancelarContratar;
     private javax.swing.JButton btnCancelarNuevoEmpleado;
     public javax.swing.JButton btnCancelarPedido;
     public javax.swing.JButton btnContratarEmple;
@@ -1183,10 +1232,12 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnQuitarCantidad;
     public javax.swing.JButton btnQuitarProductoPedido;
     public javax.swing.JButton btnSelectBar;
+    public javax.swing.JComboBox<String> comboContratar;
     public javax.swing.JComboBox<String> comboProveedores;
     public javax.swing.JComboBox comboPuestoEmple;
     public javax.swing.JDialog dialogAdministrarBares;
     public javax.swing.JDialog dialogAñadirEmpleado;
+    public javax.swing.JDialog dialogContratar;
     public javax.swing.JDialog dialogEmpleados;
     public javax.swing.JDialog dialogHacerPedido;
     public javax.swing.JDialog dialogProductos;
@@ -1216,6 +1267,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1234,6 +1286,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1245,6 +1298,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable jTable1;
     public javax.swing.JTable jTable2;
+    public javax.swing.JList<String> listContratar;
     public javax.swing.JList<String> listEmpleadosParaBar;
     public javax.swing.JList<String> listNuevoTitular;
     public javax.swing.JList<String> listPedidoFecha;

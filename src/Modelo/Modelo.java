@@ -31,7 +31,7 @@ public class Modelo extends Conexion {
             }
             return true;
         } catch (SQLException e) {
-             System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return false;
     }
@@ -46,7 +46,7 @@ public class Modelo extends Conexion {
             cstmt.execute();
             return true;
         } catch (SQLException e) {
-             System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return false;
     }
@@ -75,7 +75,7 @@ public class Modelo extends Conexion {
             cstmt.execute();
             return true;
         } catch (SQLException e) {
-             System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return false;
     }
@@ -92,7 +92,7 @@ public class Modelo extends Conexion {
             cstmt.execute();
             return true;
         } catch (Exception e) {
-             System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return false;
     }
@@ -124,7 +124,7 @@ public class Modelo extends Conexion {
         }
         return false;
     }
-    
+
     public boolean actualizarEmple(String dn, String nom, String dom, boolean sql) {
         try {
             String q = "{call  actualizarEmple(?, ?, ?)}";
@@ -139,7 +139,7 @@ public class Modelo extends Conexion {
         }
         return false;
     }
-    
+
     public boolean borrarEmple(String dn, boolean sql) {
         try {
             String q = "{call  borrarEmple(?)}";
@@ -244,9 +244,9 @@ public class Modelo extends Conexion {
     }
 
     public DefaultTableModel getEmpleado(boolean sql) {
-        DefaultTableModel tab = new DefaultTableModel(){
+        DefaultTableModel tab = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
-               return false;    
+                return false;
             }
         };
         try {
@@ -312,7 +312,7 @@ public class Modelo extends Conexion {
         }
         return tab;
     }
-    
+
     public DefaultTableModel getBar(boolean sql) {
         DefaultTableModel tab = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -347,22 +347,173 @@ public class Modelo extends Conexion {
         }
         return tab;
     }
-    
-    public DefaultListModel getEmpleadoList(String nom, String dn, boolean sql){
+
+    public DefaultListModel getEmpleadoList(String nom, String dn, boolean sql) {
         DefaultListModel list = new DefaultListModel();
-        try{
-             String q = "{call getEmpleadoList(String nom, String dn)}";
-             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
-             cstmt.setString(1, nom);
-             cstmt.setString(2, dn);
-             ResultSet rs=cstmt.executeQuery();
-             while(rs.next()){
-                 list.addElement(rs.getString(1)+"-"+rs.getString(2));
-             }
-        }catch(Exception e){
+        try {
+            String q = "{call getEmpleadoList(?, ?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setString(1, nom);
+            cstmt.setString(2, dn);
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                list.addElement(rs.getString(1) + "-" + rs.getString(2));
+            }
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return list;
     }
-       
+
+    public DefaultListModel getProductoList(String pro, boolean sql) {
+        DefaultListModel list = new DefaultListModel();
+        try {
+            String q = "{call getProductoList(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setString(1, pro);
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                list.addElement(rs.getString(1));
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public DefaultTableModel getEmpleadoBar(String ide, boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        try {
+            String p = "{?=call getCountEmpleadoBar(?)}";
+            String q = "{call getEmpleadoBar(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(p);
+            cstmt.registerOutParameter(1, Type.INT);
+            cstmt.setInt(2, Integer.parseInt(ide));
+            cstmt.execute();
+            int j = cstmt.getInt(1);
+            cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setInt(1, Integer.parseInt(ide));
+            ResultSet rs = cstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[j][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                column[i] = rsmd.getColumnName(i + 1);
+            }
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            tab.setDataVector(data, column);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return tab;
+    }
+
+    public DefaultComboBoxModel rol() {
+        String[] a = {"Titular", "Gerente", "Cocinero", "Camarero", "Barman"};
+        return new DefaultComboBoxModel(a);
+    }
+
+    public DefaultTableModel getInventario(String ide, boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        try {
+            String p = "{?=call getCountInventario(?)}";
+            String q = "{call getInventario(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(p);
+            cstmt.registerOutParameter(1, Type.INT);
+            cstmt.setInt(2, Integer.parseInt(ide));
+            cstmt.execute();
+            int j = cstmt.getInt(1);
+            cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setInt(1, Integer.parseInt(ide));
+            ResultSet rs = cstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[j][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                column[i] = rsmd.getColumnName(i + 1);
+            }
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            tab.setDataVector(data, column);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return tab;
+    }
+
+    public DefaultTableModel getPedidos(String ide, boolean sql) {
+        DefaultTableModel tab = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        try {
+            String p = "{?=call getCountPedidos(?)}";
+            String q = "{call getPedidos(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(p);
+            cstmt.registerOutParameter(1, Type.INT);
+            cstmt.setInt(2, Integer.parseInt(ide));
+            cstmt.execute();
+            int j = cstmt.getInt(1);
+            cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setInt(1, Integer.parseInt(ide));
+            ResultSet rs = cstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[j][rsmd.getColumnCount()];
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                column[i] = rsmd.getColumnName(i + 1);
+            }
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            tab.setDataVector(data, column);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return tab;
+    }
+
+    public DefaultListModel getPedidosList(String ide, boolean sql) {
+        DefaultListModel list = new DefaultListModel();
+        try {
+            String q = "{call getProductoList(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setString(1, ide);
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                list.addElement(rs.getString(1) + "-" + rs.getString(2) + "-" + rs.getString(3));
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public boolean vacio(String a, String b, String c, String d, String e) {
+        return !(a.isEmpty() || b.isEmpty() || c.isEmpty() || d.isEmpty() || e.isEmpty());
+    }
 }
