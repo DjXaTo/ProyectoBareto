@@ -426,6 +426,9 @@ public class Modelo extends Conexion {
     public DefaultTableModel getInventario(String ide, boolean sql) {
         DefaultTableModel tab = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
+                if(column==3){
+                    return true;
+                }
                 return false;
             }
         };
@@ -500,7 +503,7 @@ public class Modelo extends Conexion {
     public DefaultListModel getPedidosList(String ide, boolean sql) {
         DefaultListModel list = new DefaultListModel();
         try {
-            String q = "{call getProductoList(?)}";
+            String q = "{call getPedidosList(?)}";
             CallableStatement cstmt = this.conexionSQL().prepareCall(q);
             cstmt.setString(1, ide);
             ResultSet rs = cstmt.executeQuery();
@@ -511,6 +514,39 @@ public class Modelo extends Conexion {
             System.err.println(e.getMessage());
         }
         return list;
+    }
+    
+    
+    public String[]  getBarString(String nom, boolean sql) {
+        String[] a=new String[3];
+        try {
+            String q = "{call getBarString(?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setString(1, nom);
+            ResultSet rs = cstmt.executeQuery();
+            rs.next();
+            a[0]=rs.getString(2);
+            a[1]=rs.getString(3);
+            a[2]=rs.getString(1);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return a;
+    }
+    
+    public boolean actualizarPrecioInventario(String ide, String bar, String pre, boolean sql) {
+        try {
+            String q = "{call actualizarPrecioInventario(?, ?, ?)}";
+            CallableStatement cstmt = this.conexionSQL().prepareCall(q);
+            cstmt.setInt(1, Integer.parseInt(ide));
+            cstmt.setInt(2, Integer.parseInt(bar));
+            cstmt.setDouble(3, Double.parseDouble(pre));
+            cstmt.execute();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
     }
 
     public boolean vacio(String a, String b, String c, String d, String e) {
