@@ -9,6 +9,7 @@ import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -898,7 +899,7 @@ public class Modelo_Alfredo extends Conexion{
        public DefaultTableModel getAlumnos() {
         DefaultTableModel md = new DefaultTableModel();
         int a = 0;
-        String[] columna = {"Nombre", "numero de alumno", "clase"};
+        //saca el total de filas
         try {
             String q = "select count(*) as todo from alumno";
             PreparedStatement ps = this.conexionLITE().prepareStatement(q);
@@ -909,20 +910,26 @@ public class Modelo_Alfredo extends Conexion{
         } catch (Exception e) {
             System.err.print(e.getMessage());
         }
-        String[][] data = new String[a][3];
-        try {
+      //rellena con los datos
             String q = "select * from alumno order by nombre, numaula";
+            try {
+                //a partir de aqui es copiar y pegar
             PreparedStatement ps = this.conexionLITE().prepareStatement(q);
-            ResultSet res = ps.executeQuery();
-            int i = 0;
-            while (res.next()) {
-                data[i][0] = res.getString("nombre");
-                data[i][1] = res.getString("numalumno");
-                data[i][2] = res.getString("numaula");
-                i++;
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            String column[] = new String[rsmd.getColumnCount()];
+            String data[][] = new String[a][rsmd.getColumnCount()];
+            for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
+                column[i] = rsmd.getColumnName(i + 1);
             }
-            md.setDataVector(data, columna);
-            res.close();
+            int k = 0;
+            while (rs.next()) {
+                for (int i = 0; i <= rsmd.getColumnCount()-1; i++) {
+                    data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
+                }
+                k++;
+            }
+            md.setDataVector(data, column);
         } catch (Exception e) {
             System.err.print(e.getMessage());
         }
@@ -930,13 +937,13 @@ public class Modelo_Alfredo extends Conexion{
     }
        //ejemplo de lista 
        public DefaultListModel getListaProfesores() {
-        DefaultListModel list = new DefaultListModel();//para combobox es lo mismo
+        DefaultListModel list = new DefaultListModel();//para combobox es lo mismo solo en vez de ser listmodel es comboboxmodel
         try {
             String q = "select nombre,dni from profesores";
             PreparedStatement ps = this.conexionLITE().prepareStatement(q);
             ResultSet res = ps.executeQuery();
             while (res.next()) {
-                list.addElement(res.getString("nombre")+"-"+res.getString("dni"));
+                list.addElement(res.getString(1)+"-"+res.getString(2));
             }
             res.close();
         } catch (Exception e) {
