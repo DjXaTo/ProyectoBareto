@@ -945,6 +945,9 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnQuitarCantidad.setText("Quitar");
 
+        txtQuitarCantidad.setMinimum(1);
+        txtQuitarCantidad.setValue(1);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(

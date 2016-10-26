@@ -1824,6 +1824,10 @@
                   </AuxValues>
                 </Component>
                 <Component class="com.toedter.components.JSpinField" name="txtQuitarCantidad">
+                  <Properties>
+                    <Property name="minimum" type="int" value="1"/>
+                    <Property name="value" type="int" value="1"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>

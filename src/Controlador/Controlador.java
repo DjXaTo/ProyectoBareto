@@ -24,7 +24,6 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
 
     enum btn{
       //dialogSelecbar
-        combobares,
         selectbar,
         cancelselectbar,
         //dialogAdministrarBares
@@ -75,8 +74,6 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
     
     public void iniciar(){
        //dialogSelecbar
-        vis.comboBares.setActionCommand("combobares");
-        vis.comboBares.addActionListener(this);
         vis.btnSelectBar.setActionCommand("selectbar");
         vis.btnSelectBar.addActionListener(this);
         vis.btnCancelSelectBar.setActionCommand("cancelselectbar");
@@ -167,7 +164,17 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
     @Override
     public void actionPerformed(ActionEvent e) {
        switch(btn.valueOf(e.getActionCommand())){
-           
+           //dialogSelecbar
+           case selectbar:
+               String[] a=mod.getBarString((String)vis.comboBares.getSelectedItem(), sql);
+               vis.txtNombreBar.setText(a[0]);
+               vis.txtDirecBar.setText(a[1]);
+               vis.txtIdBar.setText(a[2]);
+               vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
+               vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+               vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
+               vis.tablaPedidos.setModel(mod.getPedidos(ide, sql));
+               break;
        }
     }
 
