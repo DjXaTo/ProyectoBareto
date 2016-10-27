@@ -370,7 +370,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             case actualizarproducto:
                 if (vis.tablaProducto.getSelectedRow() > -1) {
                     if (mod.vacio(vis.txtNombreProducto.getText(), vis.txtPrecioProducto.getText(), vis.txtProveedorProducto.getText(), "o") && vis.txtPrecioProducto.isEditValid()) {
-                        if (mod.actualizarProducto(vis.txtProveedorProducto.getText(), vis.txtNombreProducto.getText(), (String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1), vis.txtPrecioProducto.getText(), sql)) {
+                        if (mod.actualizarProducto(vis.txtProveedorProducto.getText(), vis.txtNombreProducto.getText(), (String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 0), vis.txtPrecioProducto.getText(), sql)) {
                             vis.tablaProducto.setModel(mod.getProductos(sql));
                             vis.txtNombreProducto.setText("");
                             vis.txtPrecioProducto.setText("");
@@ -506,7 +506,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             case cambiarpuesto:
                 if (vis.tablaEmple.getSelectedRow() > -1) {
                     if (mod.actualizarEmpleBar(vis.txtIdBar.getText(), vis.txtDNIEmple.getText(), (String) vis.comboPuestoEmple.getSelectedItem(), sql)) {
-
+                        vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
                     }
@@ -567,16 +567,16 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 vis.txtProveedorProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 2));
                 vis.txtPrecioProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 3));
                 vis.txtNombreProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1));
-            } else if (e.getSource().equals(vis.tablaEmple)) {
-                if (vis.tablaEmple.getSelectedRow() > -1) {
-                    vis.txtDNIEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 1));
-                    vis.txtNombreEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 2));
-                    vis.txtDomicilioEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 2));
-                }
-            } else if (vis.listPedidoFecha.getSelectedIndex() > -1) {
-                String[] h = vis.listPedidoFecha.getSelectedValue().split("-");
-                vis.tablaPedidos.setModel(mod.getPedidos(h[0], sql));
             }
+        } else if (e.getSource().equals(vis.tablaEmple)) {
+            if (vis.tablaEmple.getSelectedRow() > -1) {
+                vis.txtDNIEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 0));
+                vis.txtNombreEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 1));
+                vis.txtDomicilioEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 2));
+            }
+        } else if (vis.listPedidoFecha.getSelectedIndex() > -1) {
+            String[] h = vis.listPedidoFecha.getSelectedValue().split(" - ");
+            vis.tablaPedidos.setModel(mod.getPedidos(h[0], sql));
         }
     }
 

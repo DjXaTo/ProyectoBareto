@@ -115,7 +115,7 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "update productos set nombre='" + nom + "', proveedor=lower('" + pro + "'), precio='" + pre + "' where idproducto=" + idpro + "";
+                String q = "update productos set nombre='" + nom + "', proveedor=lower('" + pro + "'), precio='" + pre + "' where idproductos=" + idpro + "";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ps.execute();
                 ps.close();
@@ -432,7 +432,7 @@ public class Modelo extends Conexion {
 
     private boolean comprobarRecaudacion(String bar) {
         try {
-            String p = "select select * from recaudacion where fecha=date('now') and bar_idbar=" + bar;
+            String p = "select fecha from recaudacion where fecha=date('now') and bar_idbar=" + bar;
             PreparedStatement ps = this.conexionLITE().prepareStatement(p);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -832,7 +832,7 @@ public class Modelo extends Conexion {
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
             }
-            String q = "select dni, nombre from empleado join bar_has_empleado on dni=empleado_dni where bar_idbar=" + ide;
+            String q = "select dni, nombre, domicilio, rol from empleado join bar_has_empleado on dni=empleado_dni where bar_idbar=" + ide;
             try {
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet rs = ps.executeQuery();
@@ -1023,7 +1023,7 @@ public class Modelo extends Conexion {
                 cstmt.setString(1, ide);
                 ResultSet rs = cstmt.executeQuery();
                 while (rs.next()) {
-                    list.addElement(rs.getString(1) + "-" + rs.getString(2) + "-" + rs.getString(3) + "-" + rs.getString(4));
+                    list.addElement(rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4));
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -1031,11 +1031,11 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "select id, fecha, proveedor, precio from inventario_pedidos join pedidos on pedidos_id=id where inventario_bar_idbar=" + ide;
+                String q = "select distinct id, fecha, proveedor, precio from inventario_pedidos join pedidos on pedidos_id=id where inventario_bar_idbar=" + ide;
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    list.addElement(rs.getString(1) + "-" + rs.getString(2) + "-" + rs.getString(3) + "-" + rs.getString(4));
+                    list.addElement(rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4));
                 }
                 ps.close();
             } catch (SQLException ex) {
