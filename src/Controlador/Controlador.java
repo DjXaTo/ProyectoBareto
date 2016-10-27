@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -20,9 +19,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-public class Controlador implements ActionListener, MouseListener, PropertyChangeListener, ChangeListener, KeyListener{
+public class Controlador implements ActionListener, MouseListener, ChangeListener, KeyListener{
     Interfaz vis;
     Modelo mod=new Modelo();
     boolean sql;
@@ -34,6 +35,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
       //dialogSelecbar
         selectbar,
         cancelselectbar,
+        combobar,
         //dialogAdministrarBares
         añadirbar,
         borrarbar,
@@ -75,8 +77,10 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         //jframe inventario
         quitarcantidad,
         borrarinventario,
-        hacerpedido
-        //
+        hacerpedido,
+        menugenerar,
+        factura
+        
     }
 
     public void iniciar() {
@@ -96,6 +100,8 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         } catch (IllegalAccessException ex) {
         }
         //dialogSelecbar
+        vis.comboBares.setActionCommand("combobar");
+        vis.comboBares.addActionListener(this);
         vis.btnSelectBar.setActionCommand("selectbar");
         vis.btnSelectBar.addActionListener(this);
         vis.btnCancelSelectBar.setActionCommand("cancelselectbar");
@@ -113,7 +119,22 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         vis.btnDerechaTitular.addActionListener(this);
         vis.btnNuevoEmpleadoBar.setActionCommand("nuevoempleadobar");
         vis.btnNuevoEmpleadoBar.addActionListener(this);
-        vis.txtBusqueda.addPropertyChangeListener(this);
+        vis.txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent e){
+             vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList(vis.txtBusqueda.getText()+"%", vis.txtBusqueda.getText()+"%", sql));
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+             vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList(vis.txtBusqueda.getText()+"%", vis.txtBusqueda.getText()+"%", sql));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+             vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList(vis.txtBusqueda.getText()+"%", vis.txtBusqueda.getText()+"%", sql));
+            }
+    });
         //dialogEmpleados
         vis.btnAñadirEmpleado.setActionCommand("añadirempleado");
         vis.btnAñadirEmpleado.addActionListener(this);
@@ -179,6 +200,10 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
         vis.btnHacerPedido.setActionCommand("hacerpedido");
         vis.btnHacerPedido.addActionListener(this);
         vis.tablaInventario.addKeyListener(this);
+        vis.menuGenerar.setActionCommand("menugenerar");
+        vis.menuGenerar.addActionListener(this);
+        vis.btnFactura.setActionCommand("factura");
+        vis.btnFactura.addActionListener(this);
         //jframe pedidos
         vis.rbNorte.setSelected(true);
         vis.listPedidoFecha.addMouseListener(this);
@@ -192,11 +217,23 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
     public void actionPerformed(ActionEvent e) {
         switch (btn.valueOf(e.getActionCommand())) {
             //dialogSelecbar
-            case selectbar:
+            case combobar:
                 String[] a = mod.getBarString((String) vis.comboBares.getSelectedItem(), sql);
                 vis.txtNombreBar.setText(a[0]);
                 vis.txtDirecBar.setText(a[1]);
                 vis.txtIdBar.setText(a[2]);
+                vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
+                vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
+                vis.tablaPedidos.setModel(mod.getPedidos("0", sql));
+                break;
+            case selectbar:
+                vis.comboBares.setModel(mod.getBares(sql));
+                vis.dialogSelecBar.dispose();
+                String[] f = mod.getBarString((String) vis.comboBares.getSelectedItem(), sql);
+                vis.txtNombreBar.setText(f[0]);
+                vis.txtDirecBar.setText(f[1]);
+                vis.txtIdBar.setText(f[2]);
                 vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
                 vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
                 vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
@@ -232,7 +269,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                             if (mod.asignarEmpleBar((String) vis.tablaBar.getValueAt(vis.tablaBar.getRowCount() - 1, 0), emp[0], "Titular", sql)) {
 
                             } else {
-                                JOptionPane.showConfirmDialog(vis, "Error al insertar titular");
+                                JOptionPane.showMessageDialog(vis, "Error al insertar titular");
                             }
                         }
                     }
@@ -288,7 +325,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                 if (mod.vacio(vis.txtDni.getText(), vis.txtDomicilioEmpleado.getText(), vis.txtNombreEmpleado.getText(), "i") && Letras.dni(vis.txtDni.getText())) {
                     if (mod.crearEmple(vis.txtDni.getText(), vis.txtNombreEmpleado.getText(), vis.txtDomicilioEmpleado.getText(), sql)) {
                         vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
-                        vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList("", "", sql));
+                        vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList("%", "%", sql));
                         vis.txtDni.setText("");
                         vis.txtNombreEmpleado.setText("");
                         vis.txtDomicilioEmpleado.setText("");
@@ -326,6 +363,8 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                     if (mod.borrarProducto((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1), sql)) {
                         vis.tablaProducto.setModel(mod.getProductos(sql));
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "selecciona una fila");
                 }
                 break;
             case actualizarproducto:
@@ -342,6 +381,8 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                     } else {
                         JOptionPane.showMessageDialog(null, "Rellene los campos");
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "selecciona una fila");
                 }
                 break;
             //dialogHacerPedido
@@ -396,6 +437,7 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
             case cancelarpedido:
                 vis.listProductoPedido.setModel(new DefaultListModel());
                 vis.listProductoAPedir.setModel(new DefaultListModel());
+                vis.dialogHacerPedido.dispose();
                 break;
             //dialogContrata
             case aceptarcontratar:
@@ -412,47 +454,52 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
             case cancelarcontratar:
                 vis.dialogContratar.dispose();
                 break;
-                //Jframe menu bar
+            //Jframe menu bar
             case menuselecbar:
                 vis.dialogSelecBar.setSize(360, 230);
                 vis.dialogSelecBar.setVisible(true);
                 break;
-            case  menuadminbar:
+            case menuadminbar:
+                 vis.tablaBar.setModel(mod.getBar(sql));
+                vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList("%", "%", sql));
                 vis.dialogAdministrarBares.setSize(790, 500);
                 vis.dialogAdministrarBares.setVisible(true);
-                vis.tablaBar.setModel(mod.getBar(sql));
-                vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList("", "", sql));
+               
+                
                 break;
-                //jframe menu persona
+            //jframe menu persona
             case menulistapersona:
+                vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
                 vis.dialogEmpleados.setSize(790, 350);
                 vis.dialogEmpleados.setVisible(true);
-                vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
+                
                 break;
-        //jframe menu producto
+            //jframe menu producto
             case menuproductos:
+                vis.tablaProducto.setModel(mod.getProductos(sql));
                 vis.dialogProductos.setSize(790, 290);
                 vis.dialogProductos.setVisible(true);
-                vis.tablaProducto.setModel(mod.getProductos(sql)); 
+                
                 break;
-        //jframe menu salir
+            //jframe menu salir
             case menusalir:
                 System.exit(0);
                 break;
-                //jframe empleado
+            //jframe empleado
             case contratar:
+                vis.listContratar.setModel(mod.getEmpleadoList("%", "%", sql));
                 vis.dialogContratar.setSize(420, 320);
                 vis.dialogContratar.setVisible(true);
-                vis.listContratar.setModel(mod.getEmpleadoList("", "", sql));
+                
                 break;
             case despedir:
-                if(vis.tablaEmple.getSelectedRow()>-1){
-                if(mod.borrarEmpleBar((String)vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)){
-                    vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
-                }else{
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-                }
-                }else{
+                if (vis.tablaEmple.getSelectedRow() > -1) {
+                    if (mod.borrarEmpleBar((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)) {
+                        vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+                    }
+                } else {
                     JOptionPane.showMessageDialog(null, "Selecciona una fila");
                 }
                 break;
@@ -469,129 +516,132 @@ public class Controlador implements ActionListener, MouseListener, PropertyChang
                 break;
             //jframe inventario
             case quitarcantidad:
-                if(vis.tablaInventario.getSelectedRow()>-1){
-                    try{
-                    if(mod.gastar(String.valueOf(vis.txtQuitarCantidad.getValue()),(String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)){
-                        vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+                if (vis.tablaInventario.getSelectedRow() > -1) {
+                    try {
+                        if (mod.gastar(String.valueOf(vis.txtQuitarCantidad.getValue()), (String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)) {
+                            vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+                        }
+                    } catch (Exception n) {
+                        JOptionPane.showMessageDialog(null, "Valor incorrecto");
                     }
-                    }catch(Exception n){
-                        JOptionPane.showMessageDialog(null, "Valor incorrecto"); 
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecciona fila"); 
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecciona fila");
                 }
                 break;
             case borrarinventario:
-                 if(vis.tablaInventario.getSelectedRow()>-1){
-                     if(mod.borrarInventario((String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)){
-                         vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
-                     }else{
-                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-                     }
-                 }else{
-                     JOptionPane.showMessageDialog(null, "selecciona fila"); 
-                 }
+                if (vis.tablaInventario.getSelectedRow() > -1) {
+                    if (mod.borrarInventario((String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)) {
+                        vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "selecciona fila");
+                }
                 break;
             case hacerpedido:
+                vis.comboProveedores.setModel(mod.getProveedores(sql));
+                vis.listProductoPedido.setModel(mod.getProductoList((String) vis.comboProveedores.getSelectedItem(), sql));
                 vis.dialogHacerPedido.setSize(750, 320);
                 vis.dialogHacerPedido.setVisible(true);
-                vis.comboProveedores.setModel(mod.getProveedores(sql));
+                
                 break;
+            case menugenerar:
+                mod.JasperReport(sql);
+                break;
+            case factura:
+                if(vis.listPedidoFecha.getSelectedIndex()>-1){
+                    String g[]=vis.listPedidoFecha.getSelectedValue().split("-");
+                    mod.generarFactura(g[1], g[0], g[2], sql);
+                }
+            break;
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource().equals(vis.tablaProducto)){
-            if(vis.tablaProducto.getSelectedRow()>-1){
+        if (e.getSource().equals(vis.tablaProducto)) {
+            if (vis.tablaProducto.getSelectedRow() > -1) {
                 vis.txtProveedorProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 2));
                 vis.txtPrecioProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 3));
-                vis.txtNombreProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1));               
-            }else if(e.getSource().equals(vis.tablaEmple)){
-                if(vis.tablaEmple.getSelectedRow()>-1){
+                vis.txtNombreProducto.setText((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1));
+            } else if (e.getSource().equals(vis.tablaEmple)) {
+                if (vis.tablaEmple.getSelectedRow() > -1) {
                     vis.txtDNIEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 1));
                     vis.txtNombreEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 2));
                     vis.txtDomicilioEmple.setText((String) vis.tablaEmple.getValueAt(vis.tablaEmple.getSelectedRow(), 2));
                 }
-            }else{
-                if(vis.listPedidoFecha.getSelectedIndex()>-1){
-                    String[] h=vis.listPedidoFecha.getSelectedValue().split("-");
-                    vis.tablaPedidos.setModel(mod.getPedidos(h[0], sql));
-                }
+            } else if (vis.listPedidoFecha.getSelectedIndex() > -1) {
+                String[] h = vis.listPedidoFecha.getSelectedValue().split("-");
+                vis.tablaPedidos.setModel(mod.getPedidos(h[0], sql));
             }
         }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        vis.listEmpleadosParaBar.setModel(mod.getEmpleadoList(vis.txtBusqueda.getText(), vis.txtBusqueda.getText(), sql));
-    }
-   
-      @Override
     public void keyTyped(KeyEvent e) {
-       
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode()==VK_ENTER){
-            if(e.getSource().equals(vis.tablaEmpleados)){
-                int a=vis.tablaEmpleados.getSelectedRow();
-                if(mod.vacio((String)vis.tablaEmpleados.getValueAt(a, 0),(String) vis.tablaEmpleados.getValueAt(a, 1),(String) vis.tablaEmpleados.getValueAt(a, 2), "o")){
-                if(mod.actualizarEmple((String)vis.tablaEmpleados.getValueAt(a, 0),(String) vis.tablaEmpleados.getValueAt(a, 1),(String) vis.tablaEmpleados.getValueAt(a, 2), sql)){
-                    vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
-                }else{
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-            }
-            }else{
-                  JOptionPane.showMessageDialog(null, "No puede estar vacio");  
+        if (e.getKeyCode() == VK_ENTER) {
+            if (e.getSource().equals(vis.tablaEmpleados)) {
+                int a = vis.tablaEmpleados.getSelectedRow();
+                if (mod.vacio((String) vis.tablaEmpleados.getValueAt(a, 0), (String) vis.tablaEmpleados.getValueAt(a, 1), (String) vis.tablaEmpleados.getValueAt(a, 2), "o")) {
+                    if (mod.actualizarEmple((String) vis.tablaEmpleados.getValueAt(a, 0), (String) vis.tablaEmpleados.getValueAt(a, 1), (String) vis.tablaEmpleados.getValueAt(a, 2), sql)) {
+                        vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede estar vacio");
                 }
-            } else{
-                int a=vis.tablaInventario.getSelectedRow();
+            } else {
+                int a = vis.tablaInventario.getSelectedRow();
                 if (mod.vacio((String) vis.tablaInventario.getValueAt(a, 0), "u", "o", "o")) {
-                if (mod.actualizarPrecioInventario((String) vis.tablaInventario.getValueAt(a, 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(a, 4), sql)) {
-                    vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
-                }
-            }else{
-                    JOptionPane.showMessageDialog(null, "No puede estar vacio");   
+                    if (mod.actualizarPrecioInventario((String) vis.tablaInventario.getValueAt(a, 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(a, 4), sql)) {
+                        vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede estar vacio");
                 }
             }
         }
     }
-    
+
     public void stateChanged(ChangeEvent e) {
-       if(vis.rbNorte.isSelected()){
-           sql=true;
-       }else{
-           sql=false;
-       }
-       vis.comboBares.setModel(mod.getBares(sql));
+        if (vis.rbNorte.isSelected()) {
+            sql = true;
+        } else {
+            sql = false;
+        }
     }
 }

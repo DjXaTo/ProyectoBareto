@@ -32,7 +32,6 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         rbNorte = new javax.swing.JRadioButton();
         rbSur = new javax.swing.JRadioButton();
-        comboBares = new javax.swing.JComboBox<>();
         btnSelectBar = new javax.swing.JButton();
         btnCancelSelectBar = new javax.swing.JButton();
         grupoZonaBares = new javax.swing.ButtonGroup();
@@ -118,6 +117,7 @@ public class Interfaz extends javax.swing.JFrame {
         txtDirecBar = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtIdBar = new javax.swing.JLabel();
+        comboBares = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelEmpleados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -149,6 +149,7 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaPedidos = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
+        btnFactura = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuBar = new javax.swing.JMenu();
         miSelectBar = new javax.swing.JMenuItem();
@@ -159,6 +160,7 @@ public class Interfaz extends javax.swing.JFrame {
         menuProductos = new javax.swing.JMenuItem();
         menuSalir = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
+        menuGenerar = new javax.swing.JMenuItem();
 
         dialogSelecBar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialogSelecBar.setModal(true);
@@ -192,8 +194,6 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(rbSur))
         );
 
-        comboBares.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnSelectBar.setText("Seleccionar");
 
         btnCancelSelectBar.setText("Cancelar");
@@ -205,7 +205,6 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(dialogSelecBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(dialogSelecBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBares, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(dialogSelecBarLayout.createSequentialGroup()
                         .addComponent(btnSelectBar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,9 +217,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(dialogSelecBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBares, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(64, 64, 64)
                 .addGroup(dialogSelecBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSelectBar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(btnCancelSelectBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,6 +225,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogAdministrarBares.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogAdministrarBares.setModal(true);
+        dialogAdministrarBares.setResizable(false);
 
         tablaBar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -453,6 +452,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogEmpleados.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogEmpleados.setModal(true);
+        dialogEmpleados.setResizable(false);
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -495,6 +496,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogAñadirEmpleado.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialogAñadirEmpleado.setModal(true);
+        dialogAñadirEmpleado.setResizable(false);
 
         jLabel21.setText("Nombre:");
 
@@ -552,6 +555,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogProductos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogProductos.setModal(true);
+        dialogProductos.setResizable(false);
 
         tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -629,6 +634,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogHacerPedido.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialogHacerPedido.setModal(true);
+        dialogHacerPedido.setResizable(false);
 
         comboProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -717,12 +724,9 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         dialogContratar.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialogContratar.setModal(true);
+        dialogContratar.setResizable(false);
 
-        listContratar.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane12.setViewportView(listContratar);
 
         comboContratar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -740,11 +744,11 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(dialogContratarLayout.createSequentialGroup()
                         .addComponent(btnAceptarContratar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelarContratar))
                     .addComponent(jScrollPane12)
                     .addComponent(comboContratar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         dialogContratarLayout.setVerticalGroup(
             dialogContratarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -773,6 +777,8 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Numero del bar:");
 
+        comboBares.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
@@ -788,6 +794,8 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(txtNombreBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtDirecBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtIdBar, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(comboBares, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
@@ -797,11 +805,16 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNombreBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtDirecBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addComponent(txtDirecBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(comboBares, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
                     .addComponent(txtIdBar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -892,7 +905,7 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(txtNombreEmple)
                             .addComponent(txtDomicilioEmple, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                             .addComponent(comboPuestoEmple, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 338, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -972,7 +985,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(txtQuitarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnQuitarCantidad)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         btnBorrarInventario.setText("borrar");
@@ -986,7 +999,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(panelInventarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
                     .addGroup(panelInventarioLayout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
@@ -1033,6 +1046,8 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("PEDIDOS");
 
+        btnFactura.setText("Generar Factura");
+
         javax.swing.GroupLayout panelPedidosLayout = new javax.swing.GroupLayout(panelPedidos);
         panelPedidos.setLayout(panelPedidosLayout);
         panelPedidosLayout.setHorizontalGroup(
@@ -1041,22 +1056,27 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(panelPedidosLayout.createSequentialGroup()
+                .addGap(449, 449, 449)
+                .addComponent(btnFactura)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPedidosLayout.setVerticalGroup(
             panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidosLayout.createSequentialGroup()
+            .addGroup(panelPedidosLayout.createSequentialGroup()
                 .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPedidosLayout.createSequentialGroup()
-                        .addContainerGap(15, Short.MAX_VALUE)
+                    .addGroup(panelPedidosLayout.createSequentialGroup()
                         .addComponent(jLabel29)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(64, 64, 64))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(btnFactura)
+                .addGap(0, 53, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pedidos", panelPedidos);
@@ -1092,6 +1112,9 @@ public class Interfaz extends javax.swing.JFrame {
         miSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
         miSalir.setText("Salir");
         menuSalir.add(miSalir);
+
+        menuGenerar.setText("Generar resumen");
+        menuSalir.add(menuGenerar);
 
         jMenuBar1.add(menuSalir);
 
@@ -1177,6 +1200,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnContratarEmple;
     public javax.swing.JButton btnDerechaTitular;
     public javax.swing.JButton btnDespedirEmple;
+    public javax.swing.JButton btnFactura;
     public javax.swing.JButton btnHacerPedido;
     public javax.swing.JButton btnIzquierdaTitular;
     public javax.swing.JButton btnNuevoEmpleadoBar;
@@ -1248,6 +1272,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JList<String> listProductoAPedir;
     public javax.swing.JList<String> listProductoPedido;
     private javax.swing.JMenu menuBar;
+    public javax.swing.JMenuItem menuGenerar;
     private javax.swing.JMenu menuPersonas;
     public javax.swing.JMenuItem menuProductos;
     private javax.swing.JMenu menuSalir;

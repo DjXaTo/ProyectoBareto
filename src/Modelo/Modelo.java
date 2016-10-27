@@ -2,14 +2,23 @@ package Modelo;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Modelo extends Conexion {
 
@@ -504,7 +513,7 @@ public class Modelo extends Conexion {
         if (sql) {
             try {
                 String p = "{?=call getCountEmpleado()}";
-                String q = "{call getEmpleado()}";
+                String q = "{call getEmpleados()}";
                 CallableStatement cstmt = this.conexionSQL().prepareCall(p);
                 cstmt.registerOutParameter(1, Type.INT);
                 cstmt.execute();
@@ -532,11 +541,11 @@ public class Modelo extends Conexion {
             int a = 0;
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String p = "select count(*) as todo from empleado order by dni";
+                String p = "select count(*) from empleado order by dni";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(p);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
@@ -604,11 +613,11 @@ public class Modelo extends Conexion {
 
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "select count(*) as todo from productos";
+                String q = "select count(*) from productos";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
@@ -676,11 +685,11 @@ public class Modelo extends Conexion {
             int a = 0;
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "select count(*) as todo from bar";
+                String q = "select count(*) from bar";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
@@ -728,7 +737,7 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "select dni, nombre from empleado where nombre like ('" + nom + "%') or dni like ('" + dn + "%')";
+                String q = "select dni, nombre from empleado where nombre like '" + nom + "' or dni like '" + dn + "'";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 while (res.next()) {
@@ -817,7 +826,7 @@ public class Modelo extends Conexion {
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
@@ -899,12 +908,12 @@ public class Modelo extends Conexion {
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
             }
-            String q = "select codigo, nombre, cantidad, precio from inventario  where bar_idbar=ide" + ide;
+            String q = "select codigo, nombre, cantidad, precio from inventario  where bar_idbar=" + ide;
             try {
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet rs = ps.executeQuery();
@@ -973,7 +982,7 @@ public class Modelo extends Conexion {
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ResultSet res = ps.executeQuery();
                 res.next();
-                a = res.getInt("todo");
+                a = res.getInt(1);
                 ps.close();
             } catch (SQLException ex) {
                 System.err.println(ex.getMessage());
@@ -1133,5 +1142,54 @@ public class Modelo extends Conexion {
 
     public boolean vacio(String a, String b, String c, String d) {
         return !(a.isEmpty() || b.isEmpty() || c.isEmpty() || d.isEmpty());
+    }
+    
+    public void JasperReport(boolean sql) {
+        Connection con;
+        String reportSource = "plantilla/plantilla.jrxml";
+        String reportPDF;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("fecha", (new java.util.Date()).toString());
+        if (sql) {
+            con = this.conexionSQL();
+            reportPDF = "informes/InformeNorte.pdf";
+            params.put("titulo", "RESUMEN DATOS DE BARES NORTE.");
+        } else {
+            con = this.conexionLITE();
+            reportPDF = "informes/InformeSur.pdf";
+            params.put("titulo", "RESUMEN DATOS DE BARES SUR.");
+        }
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            JasperPrint MiInforme = JasperFillManager.fillReport(jasperReport, params, con);
+            JasperViewer.viewReport(MiInforme);
+            JasperExportManager.exportReportToPdfFile(MiInforme, reportPDF);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+        public void generarFactura(String fecha, String idpedido, String pro, boolean sql){
+            Connection con;
+        String reportSource = "plantilla/Factura.jrxml";
+        
+        String reportPDF="informes/Factura"+fecha+".pdf";
+        Map<String, Object> params = new HashMap<String, Object>();
+         params.put("titulo", "FACTURA "+pro+".");
+        params.put("fecha", fecha);
+        params.put("idpedido", idpedido);
+        if (sql) {
+            con = this.conexionSQL();           
+        } else {
+            con = this.conexionLITE();
+        }
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            JasperPrint MiInforme = JasperFillManager.fillReport(jasperReport, params, con);
+            JasperViewer.viewReport(MiInforme);
+            JasperExportManager.exportReportToPdfFile(MiInforme, reportPDF);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
     }
 }
