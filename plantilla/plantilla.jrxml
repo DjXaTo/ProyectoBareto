@@ -5,7 +5,7 @@
 	<parameter name="titulo" class="java.lang.String"/>
 	<parameter name="fecha" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select idbar, nombre, domicilio, horario, avg(total) as media_recaudacion, count(empleado_dni) as numero_empleados from bar b join recaudacion r on r.bar_idbar=b.idbar join bar_has_empleado h on b.idbar=h.bar_idbar]]>
+		<![CDATA[select idbar, nombre, domicilio, horario, avg(total) as media_recaudacion, count(empleado_dni) as numero_empleados from bar b join recaudacion r on r.bar_idbar=b.idbar join bar_has_empleado h on b.idbar=h.bar_idbar group by idbar]]>
 	</queryString>
 	<field name="idbar" class="java.lang.Integer"/>
 	<field name="nombre" class="java.lang.String"/>

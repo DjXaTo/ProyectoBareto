@@ -626,8 +626,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 }
             } else {
                 int a = vis.tablaInventario.getSelectedRow();
-                if (mod.vacio((String) vis.tablaInventario.getValueAt(a, 0), "u", "o", "o")) {
-                    if (mod.actualizarPrecioInventario((String) vis.tablaInventario.getValueAt(a, 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(a, 4), sql)) {
+                if (mod.vacio((String) vis.tablaInventario.getValueAt(a, 3), "u", "o", "o")) {
+                    if (mod.actualizarPrecioInventario((String) vis.tablaInventario.getValueAt(a, 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(a, 3), sql)) {
                         vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
                     }
                 } else {

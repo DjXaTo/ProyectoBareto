@@ -1855,7 +1855,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnBorrarInventario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="borrar"/>
+                <Property name="text" type="java.lang.String" value="Borrar"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

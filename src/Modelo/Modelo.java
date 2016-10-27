@@ -432,14 +432,14 @@ public class Modelo extends Conexion {
 
     private boolean comprobarRecaudacion(String bar) {
         try {
-            String p = "select fecha from recaudacion where fecha=date('now') and bar_idbar=" + bar;
+            String p = "select bar_idbar from recaudacion where fecha=date('now') and bar_idbar=" + bar;
             PreparedStatement ps = this.conexionLITE().prepareStatement(p);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            String i = rs.getString("fecha");
+            String i = rs.getString("bar_idbar");
             return true;
         } catch (Exception e) {
-
+            System.out.println("petar");
         }
         return false;
     }

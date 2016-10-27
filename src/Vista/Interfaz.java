@@ -988,7 +988,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        btnBorrarInventario.setText("borrar");
+        btnBorrarInventario.setText("Borrar");
 
         btnHacerPedido.setText("Hacer Pedido");
 
