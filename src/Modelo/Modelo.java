@@ -201,7 +201,7 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "delete from bar where id=" + ide + "";
+                String q = "delete from bar where idbar=" + ide + "";
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ps.execute();
                 ps.close();
@@ -343,7 +343,7 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "delete from bar_has_empleado where empleado_dni='" + dn + "' bar_idbar=" + ide;
+                String q = "delete from bar_has_empleado where empleado_dni='" + dn + "' and bar_idbar=" + ide;
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ps.execute();
                 ps.close();
@@ -384,7 +384,7 @@ public class Modelo extends Conexion {
         }
     }
 
-    public boolean gastar(String cant, String cod, String bar, boolean sql) {
+    public boolean gastar(String cant, String cod, String bar, String cantlite ,boolean sql) {
         if (sql) {
             try {
                 String q = "{?=call gastar(?, ?, ?)}";
@@ -401,14 +401,10 @@ public class Modelo extends Conexion {
             return false;
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
-                String p = "select cantidad from inventario where codigo=" + cod + " and bar_idbar=" + bar;
-                PreparedStatement ps = this.conexionLITE().prepareStatement(p);
-                ResultSet rs = ps.executeQuery();
-                rs.next();
-                int i = rs.getInt("cantidad");
-                if (i >= Integer.parseInt(cant) || Integer.parseInt(cant) > 0) {
+                String p;
+                if (Integer.parseInt(cantlite) >= Integer.parseInt(cant) && Integer.parseInt(cant) > 0) {
                     String q = "update inventario set cantidad=cantidad-" + cant + " where codigo=" + cod + " and bar_idbar=" + bar;
-                    ps = this.conexionLITE().prepareStatement(q);
+                    PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                     ps.execute();
                     if (comprobarRecaudacion(bar)) {
                         p = "update recaudacion set total=total+" + cant + "*(select precio from inventario where codigo=" + cod + " and bar_idbar=" + bar + ") where bar_idbar=" + bar + " and fecha=date('now')";
@@ -1163,7 +1159,7 @@ public class Modelo extends Conexion {
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
             JasperPrint MiInforme = JasperFillManager.fillReport(jasperReport, params, con);
-            JasperViewer.viewReport(MiInforme);
+            JasperViewer.viewReport(MiInforme, false);
             JasperExportManager.exportReportToPdfFile(MiInforme, reportPDF);
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -1173,7 +1169,7 @@ public class Modelo extends Conexion {
             Connection con;
         String reportSource = "plantilla/Factura.jrxml";
         
-        String reportPDF="informes/Factura"+fecha+".pdf";
+        String reportPDF="informes/Factura"+idpedido+".pdf";
         Map<String, Object> params = new HashMap<String, Object>();
          params.put("titulo", "FACTURA "+pro+".");
         params.put("fecha", fecha);
@@ -1186,7 +1182,7 @@ public class Modelo extends Conexion {
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
             JasperPrint MiInforme = JasperFillManager.fillReport(jasperReport, params, con);
-            JasperViewer.viewReport(MiInforme);
+            JasperViewer.viewReport(MiInforme, false);
             JasperExportManager.exportReportToPdfFile(MiInforme, reportPDF);
         } catch (Exception e) {
             System.err.println(e.getMessage());

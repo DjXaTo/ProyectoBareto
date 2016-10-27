@@ -255,6 +255,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                             String hora = String.valueOf(vis.hora1.getValue()) + ":" + String.valueOf(vis.minuto1.getValue()) + "-" + String.valueOf(vis.hora2.getValue()) + ":" + String.valueOf(vis.minuto2.getValue());
                             if (mod.insertaBar(vis.txtNombreBarNuevo.getText(), vis.txtBarDomicilioNuevo.getText(), hora, String.valueOf(vis.txtDias.getValue()), String.valueOf(vis.txtLicencia.getText()), sql)) {
                                 vis.tablaBar.setModel(mod.getBar(sql));
+                                vis.comboBares.setModel(mod.getBares(sql));
                                 vis.txtLicencia.setText("");
                                 vis.txtBarDomicilioNuevo.setText("");
                                 vis.txtNombreBarNuevo.setText("");
@@ -283,6 +284,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 if (vis.tablaBar.getSelectedRow() > -1) {
                     if (mod.borrarBar((String) (vis.tablaBar.getValueAt(vis.tablaBar.getSelectedRow(), 0)), sql)) {
                         vis.tablaBar.setModel(mod.getBar(sql));
+                        vis.comboBares.setModel(mod.getBares(sql));
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
                     }
@@ -313,7 +315,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case borrarempleado:
                 if (vis.tablaEmpleados.getSelectedRow() > -1) {
-                    if (mod.borrarEmple((String) (vis.tablaEmpleados.getValueAt(vis.tablaEmpleados.getSelectedRow(), 1)), sql)) {
+                    if (mod.borrarEmple((String) (vis.tablaEmpleados.getValueAt(vis.tablaEmpleados.getSelectedRow(), 0)), sql)) {
                         vis.tablaEmpleados.setModel(mod.getEmpleado(sql));
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
@@ -360,7 +362,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case borrarproducto:
                 if (vis.tablaProducto.getSelectedRow() > -1) {
-                    if (mod.borrarProducto((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 1), sql)) {
+                    if (mod.borrarProducto((String) vis.tablaProducto.getValueAt(vis.tablaProducto.getSelectedRow(), 0), sql)) {
                         vis.tablaProducto.setModel(mod.getProductos(sql));
                     }
                 }else{
@@ -426,6 +428,10 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                         cant.add(dat[1]);
                     }
                     if (mod.hacerPedido(nom, cant, vis.txtIdBar.getText(), (String) vis.comboProveedores.getSelectedItem(), sql)) {
+                        vis.listProductoAPedir.setModel(new DefaultListModel());
+                        vis.listProductoPedido.setModel(new DefaultListModel());
+                        vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
+                        vis.listPedidoFecha.setModel(mod.getPedidosList(vis.txtIdBar.getText(), sql));
                         vis.dialogHacerPedido.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
@@ -518,7 +524,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             case quitarcantidad:
                 if (vis.tablaInventario.getSelectedRow() > -1) {
                     try {
-                        if (mod.gastar(String.valueOf(vis.txtQuitarCantidad.getValue()), (String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), sql)) {
+                        if (mod.gastar(String.valueOf(vis.txtQuitarCantidad.getValue()), (String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 0), vis.txtIdBar.getText(), (String) vis.tablaInventario.getValueAt(vis.tablaInventario.getSelectedRow(), 2) ,sql)) {
                             vis.tablaInventario.setModel(mod.getInventario(vis.txtIdBar.getText(), sql));
                         } else {
                             JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
@@ -553,7 +559,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case factura:
                 if(vis.listPedidoFecha.getSelectedIndex()>-1){
-                    String g[]=vis.listPedidoFecha.getSelectedValue().split("-");
+                    String g[]=vis.listPedidoFecha.getSelectedValue().split(" - ");
                     mod.generarFactura(g[1], g[0], g[2], sql);
                 }
             break;
