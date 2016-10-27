@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
-import sun.util.logging.PlatformLogger;
 
 public class Conexion {
 

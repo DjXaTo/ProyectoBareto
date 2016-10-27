@@ -1,6 +1,6 @@
 package Modelo;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Type;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +19,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import sun.tools.java.Type;
 
 public class Modelo extends Conexion {
 
