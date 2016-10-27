@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="dialogSelecBar">
       <Properties>
-        <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="defaultCloseOperation" type="int" value="0"/>
         <Property name="modal" type="boolean" value="true"/>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>

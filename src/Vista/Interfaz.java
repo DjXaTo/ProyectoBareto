@@ -162,7 +162,7 @@ public class Interfaz extends javax.swing.JFrame {
         miSalir = new javax.swing.JMenuItem();
         menuGenerar = new javax.swing.JMenuItem();
 
-        dialogSelecBar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        dialogSelecBar.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         dialogSelecBar.setModal(true);
         dialogSelecBar.setResizable(false);
 
