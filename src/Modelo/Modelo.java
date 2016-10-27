@@ -1169,9 +1169,9 @@ public class Modelo extends Conexion {
             Connection con;
         String reportSource = "plantilla/Factura.jrxml";
         
-        String reportPDF="informes/Factura"+idpedido+".pdf";
+        String reportPDF="facturas/Factura"+idpedido+".pdf";
         Map<String, Object> params = new HashMap<String, Object>();
-         params.put("titulo", "FACTURA "+pro+".");
+         params.put("titulo", "FACTURA "+pro);
         params.put("fecha", fecha);
         params.put("idpedido", idpedido);
         if (sql) {
