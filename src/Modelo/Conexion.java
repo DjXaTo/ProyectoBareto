@@ -16,7 +16,6 @@ public class Conexion {
     String URLSQL;
     String bdSQL;
     
-    
     String URLLITE;
     
     Connection conn = null;

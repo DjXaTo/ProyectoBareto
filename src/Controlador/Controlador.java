@@ -228,6 +228,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case selectbar:
                 vis.comboBares.setModel(mod.getBares(sql));
+                //Comenta esto del dispose
                 vis.dialogSelecBar.dispose();
                 String[] f = mod.getBarString((String) vis.comboBares.getSelectedItem(), sql);
                 vis.txtNombreBar.setText(f[0]);
@@ -265,6 +266,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                             JOptionPane.showMessageDialog(null, "hora y dias sin letras por favor");
                         }
                         for (int i = 0; i < Lista.extraerElementos(vis.listNuevoTitular).size(); i++) {
+                            //Comenta esto del split
                             String[] emp = Lista.extraerElementos(vis.listNuevoTitular).get(i).split("-");
                             if (mod.asignarEmpleBar((String) vis.tablaBar.getValueAt(vis.tablaBar.getRowCount() - 1, 0), emp[0], "Titular", sql)) {
 
@@ -449,6 +451,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 if (vis.listContratar.getSelectedIndex() > -1) {
                     String[] emp = vis.listContratar.getSelectedValue().split("-");
                     if (mod.asignarEmpleBar(vis.txtIdBar.getText(), emp[0], (String) vis.comboContratar.getSelectedItem(), sql)) {
+                        
                         vis.dialogContratar.dispose();
                         vis.tablaEmple.setModel(mod.getEmpleadoBar(vis.txtIdBar.getText(), sql));
                     } else {
@@ -558,6 +561,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case factura:
                 if(vis.listPedidoFecha.getSelectedIndex()>-1){
+                    
                     String g[]=vis.listPedidoFecha.getSelectedValue().split(" - ");
                     mod.generarFactura(g[1], g[0], g[2], sql);
                 }
