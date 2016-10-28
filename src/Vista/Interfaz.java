@@ -239,6 +239,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaBar.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(tablaBar);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestion"));
@@ -466,6 +467,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane8.setViewportView(tablaEmpleados);
 
         btnAñadirEmpleado.setText("Añadir");
@@ -569,6 +571,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaProducto.getTableHeader().setReorderingAllowed(false);
         jScrollPane9.setViewportView(tablaProducto);
 
         jLabel24.setText("Nombre:");
@@ -954,6 +957,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaInventario.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaInventario);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Quitar Cantidad"));
@@ -1045,6 +1049,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaPedidos.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tablaPedidos);
 
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
