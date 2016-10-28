@@ -29,6 +29,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         vis=vi;
     }
 
+    //Enum contiene los alias para todos los componentes que contengan un actionperformed
     enum btn{
       //dialogSelecbar
         selectbar,

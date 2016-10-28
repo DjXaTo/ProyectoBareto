@@ -626,12 +626,13 @@ public class Modelo extends Conexion {
                 ResultSetMetaData rsmd = rs.getMetaData();
                 String column[] = new String[rsmd.getColumnCount()];
                 String data[][] = new String[a][rsmd.getColumnCount()];
-                for (int i = 0; i <= rsmd.getColumnCount() - 1; i++) {
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    //i de 0 a num columna
                     column[i] = rsmd.getColumnName(i + 1);
                 }
                 int k = 0;
                 while (rs.next()) {
-                    for (int i = 0; i <= rsmd.getColumnCount() - 1; i++) {
+                    for (int i = 0; i < rsmd.getColumnCount(); i++) {
                         data[k][i] = rs.getString(rsmd.getColumnName(i + 1));
                     }
                     k++;

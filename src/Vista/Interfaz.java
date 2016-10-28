@@ -641,6 +641,9 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel27.setText("Cantidad:");
 
+        txtCantidadPedido.setMaximum(500);
+        txtCantidadPedido.setMinimum(1);
+
         jLabel28.setText("Proveedores:");
 
         listProductoPedido.setModel(new javax.swing.AbstractListModel<String>() {
@@ -834,6 +837,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaEmple.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaEmple);
 
         jLabel2.setText("DNI:");
