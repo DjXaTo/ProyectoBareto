@@ -16,10 +16,8 @@ public class Conexion {
     String URLSQL;
     String bdSQL;
     
-    String usuarioLITE;
-    String passLITE;
+    
     String URLLITE;
-    String bdLITE;
     
     Connection conn = null;
     Connection conn2 = null;
@@ -30,6 +28,7 @@ public class Conexion {
             conn = DriverManager.getConnection("jdbc:mysql://" + URLSQL + "/" + bdSQL, usuarioSQL, passSQL);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         try {
             conn2 = DriverManager.getConnection("jdbc:sqlite:" + URLLITE);
@@ -38,6 +37,7 @@ public class Conexion {
             }
         } catch (SQLException e) {
             System.err.println("No se ha podido conectar a la base de datos" + e.getMessage());
+            System.exit(0);
         }
     }
 
