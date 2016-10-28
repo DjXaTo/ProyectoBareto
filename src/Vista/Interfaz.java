@@ -70,6 +70,7 @@ public class Interfaz extends javax.swing.JFrame {
         tablaEmpleados = new javax.swing.JTable();
         btnAñadirEmpleado = new javax.swing.JButton();
         btnBorrarEmpleado = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         dialogAñadirEmpleado = new javax.swing.JDialog();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -143,6 +144,7 @@ public class Interfaz extends javax.swing.JFrame {
         txtQuitarCantidad = new com.toedter.components.JSpinField();
         btnBorrarInventario = new javax.swing.JButton();
         btnHacerPedido = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         panelPedidos = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listPedidoFecha = new javax.swing.JList<>();
@@ -474,6 +476,8 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnBorrarEmpleado.setText("Borrar");
 
+        jLabel9.setText("Modificar datos de la tabla para actualizar");
+
         javax.swing.GroupLayout dialogEmpleadosLayout = new javax.swing.GroupLayout(dialogEmpleados.getContentPane());
         dialogEmpleados.getContentPane().setLayout(dialogEmpleadosLayout);
         dialogEmpleadosLayout.setHorizontalGroup(
@@ -485,12 +489,18 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(btnBorrarEmpleado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogEmpleadosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(20, 20, 20))
         );
         dialogEmpleadosLayout.setVerticalGroup(
             dialogEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogEmpleadosLayout.createSequentialGroup()
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
                 .addGroup(dialogEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrarEmpleado)
                     .addComponent(btnAñadirEmpleado))
@@ -1000,6 +1010,8 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnHacerPedido.setText("Hacer Pedido");
 
+        jLabel8.setText("Modifique el precio en la tabla");
+
         javax.swing.GroupLayout panelInventarioLayout = new javax.swing.GroupLayout(panelInventario);
         panelInventario.setLayout(panelInventarioLayout);
         panelInventarioLayout.setHorizontalGroup(
@@ -1007,15 +1019,22 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(panelInventarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(panelInventarioLayout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnBorrarInventario)
-                        .addGap(91, 91, 91)
-                        .addComponent(btnHacerPedido)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelInventarioLayout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(btnBorrarInventario)
+                                .addGap(91, 91, 91)
+                                .addComponent(btnHacerPedido)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInventarioLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8)
+                                .addGap(225, 225, 225))))))
         );
         panelInventarioLayout.setVerticalGroup(
             panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1024,13 +1043,17 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInventarioLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelInventarioLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBorrarInventario)
-                            .addComponent(btnHacerPedido))))
+                            .addComponent(btnHacerPedido)))
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelInventarioLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -1254,6 +1277,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
