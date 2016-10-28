@@ -142,7 +142,7 @@ public class Modelo extends Conexion {
         } else {
             try {    //creamos la sentencia sql para insertar un contacto
 
-                String q = "delete from productos where idproductos=" + idpro + "";
+                String q = "delete from productos where idproductos=" + idpro;
                 PreparedStatement ps = this.conexionLITE().prepareStatement(q);
                 ps.execute();
                 ps.close();
