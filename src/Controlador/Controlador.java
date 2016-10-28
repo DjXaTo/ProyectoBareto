@@ -228,7 +228,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 break;
             case selectbar:
                 vis.comboBares.setModel(mod.getBares(sql));
-                //Comenta esto del dispose
+                //con el dispose cerramos el jDialog
                 vis.dialogSelecBar.dispose();
                 String[] f = mod.getBarString((String) vis.comboBares.getSelectedItem(), sql);
                 vis.txtNombreBar.setText(f[0]);
@@ -266,8 +266,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                             JOptionPane.showMessageDialog(null, "hora y dias sin letras por favor");
                         }
                         for (int i = 0; i < Lista.extraerElementos(vis.listNuevoTitular).size(); i++) {
-                            //Comenta esto del split
-                            String[] emp = Lista.extraerElementos(vis.listNuevoTitular).get(i).split("-");
+                            //Utilizamos el split para indicar que, mediante " - " vamos a separar los campos para que los guarde como strings
+                            String[] emp = Lista.extraerElementos(vis.listNuevoTitular).get(i).split(" - ");
                             if (mod.asignarEmpleBar((String) vis.tablaBar.getValueAt(vis.tablaBar.getRowCount() - 1, 0), emp[0], "Titular", sql)) {
 
                             } else {
